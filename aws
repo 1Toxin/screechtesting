@@ -26,6 +26,46 @@ end
 
 getbagnumbers()
 
+local World1Eggtable = {"None"}
+
+local function getWorld1EggNames()
+        for i, w1eggnames in pairs(game:GetService("Workspace").Zones["1"].Map.Eggs:GetChildren()) do
+            table.insert(World1Eggtable, w1eggnames.Name)
+    end
+end
+
+getWorld1EggNames()
+
+local World2Eggtable = {"None"}
+
+local function getWorld2EggNames()
+        for i, w2eggnames in pairs(game:GetService("Workspace").Zones["2"].Map.Eggs:GetChildren()) do
+            table.insert(World2Eggtable, w2eggnames.Name)
+    end
+end
+
+getWorld2EggNames()
+
+local World3Eggtable = {"None"}
+
+local function getWorld3EggNames()
+        for i, w3eggnames in pairs(game:GetService("Workspace").Zones["3"].Interactables.Eggs:GetChildren()) do
+            table.insert(World3Eggtable, w3eggnames.Name)
+    end
+end
+
+getWorld3EggNames()
+
+local World4Eggtable = {"None"}
+
+local function getWorld4EggNames()
+        for i, w4eggnames in pairs(game:GetService("Workspace").Zones["4"].Interactables.Eggs:GetChildren()) do
+            table.insert(World4Eggtable, w4eggnames.Name)
+    end
+end
+
+getWorld4EggNames()
+
 local zonetable = {"None"}
 
 local function getzonenumbers()
@@ -103,6 +143,11 @@ local Exploits = Window:MakeTab({
 local Event = Window:MakeTab({
     Name = "Event",
     Icon = "rbxassetid://13977902143",
+    PremiumOnly = false
+})
+local Pets = Window:MakeTab({
+    Name = "Pets",
+    Icon = "rbxassetid://13628400877",
     PremiumOnly = false
 })
 
@@ -200,6 +245,10 @@ local indexplaceholder = Index:AddSection({
     Name = "COMING SOON"
 })
 
+local AutoHatch = Pets:AddSection({
+    Name = "Pets - Auto Hatch"
+})
+
 
 UpdateLog:AddParagraph("Update Log","✅ Script Released\n✅ Join the Discord\n✅ More being added VERY soon!")
 UpdateLog:AddParagraph("Credits","Script made by 1oxin")
@@ -221,7 +270,7 @@ local function updateStats(Stats)
     local bicepPower = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Bicep.Amount.Text
     local handPower = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Hand.Amount.Text
     local knucklePower = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Speed.Amount.Text
-
+	
     eggeventamt:Set(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Event.Amount.Text)
     NPCStat:Set("Wins: "..rebirths)
     Statistics:Set("Wins: "..rebirths.."\nBicep Power: "..bicepPower.."\nHand Power: "..handPower.."\nKnuckle Power: "..knucklePower)
@@ -872,7 +921,60 @@ AutoGhost:AddToggle({
     end    
 })
 
+_G.SelectedEgg = "None"
+
+local selectedegglabel = AutoHatch:AddLabel("Selected Egg: ".._G.SelectedEgg)
+
+AutoHatch:AddDropdown({
+	Name = "World 1 Eggs",
+	Default = World1Eggtable[1],
+	Options = World1Eggtable,
+	Callback = function(Value)
+		_G.SelectedEgg = Value
+	end    
+})
+
+AutoHatch:AddDropdown({
+	Name = "World 2 Eggs",
+	Default = World2Eggtable[1],
+	Options = World2Eggtable,
+	Callback = function(Value)
+		_G.SelectedEgg = Value
+	end    
+})
+
+AutoHatch:AddDropdown({
+	Name = "World 3 Eggs",
+	Default = World3Eggtable[1],
+	Options = World3Eggtable,
+	Callback = function(Value)
+		_G.SelectedEgg = Value
+	end    
+})
+
+AutoHatch:AddDropdown({
+	Name = "World 4 Eggs",
+	Default = World4Eggtable[1],
+	Options = World4Eggtable,
+	Callback = function(Value)
+		_G.SelectedEgg = Value
+	end    
+})
+
+AutoHatch:AddToggle({
+	Name = "Auto Hatch Selected Egg",
+	Default = false,
+	Callback = function(Value)
+	_G.ToggleHatch = Value
+		while _G.ToggleHatch do
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg)
+		end
+	end    
+})
+
+
 while true do
     wait()
+	selectedegglabel:Set("Selected Egg: ".._G.SelectedEgg)
     updateStats(Statistics)
 end
