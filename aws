@@ -525,47 +525,32 @@ ExploitEnable:AddToggle({
         _G.multifarm = Value
         while _G.multifarm do
             wait()
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local knitServices = ReplicatedStorage.Packages._Index["sleitnick_knit@1.4.7"].knit.Services
+
+            local toolService = knitServices.ToolService.RE
+            local punchBagService = knitServices.PunchBagService.RE
+
+            local traintype, weight, kgValue, numericValue, level
+
             if _G.traintype2 == "Dumbells" or _G.traintype2 == "Grips" then
-                local kgValue2 = _G.KGSelected1
-                local numericValue2 = tonumber(kgValue2:match("%d+"))
-                if numericValue2 < 251 then  
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("1", _G.traintype2, _G.KGSelected1)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue2 < 4001 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("2", _G.traintype2, _G.KGSelected1)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue2 < 45001 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("3", _G.traintype2, _G.KGSelected1)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue2 < 300001 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("4", _G.traintype2, _G.KGSelected1)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                end
+                traintype = _G.traintype2
+                weight = _G.KGSelected1
+                kgValue = weight
+                numericValue = tonumber(kgValue:match("%d+"))
+                level = numericValue < 251 and "1" or numericValue < 4001 and "2" or numericValue < 45001 and "3" or "4"
+                toolService.onGuiEquipRequest:FireServer(level, traintype, weight)
             elseif _G.traintype2 == "Barbells" then
-                local kgValue3 = _G.TBarBellSelected
-                local numericValue3 = tonumber(kgValue3:match("%d+"))
-                if numericValue3 == 1 or numericValue3 == 2 or numericValue3 == 3 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(1, "Barbells", _G.TBarBellSelected)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue3 == 4 or numericValue3 == 5 or numericValue3 == 6 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(2, "Barbells", _G.TBarBellSelected)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue3 == 7 or numericValue3 == 8 or numericValue3 == 9 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(3, "Barbells", _G.TBarBellSelected)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                elseif numericValue3 == 10 or numericValue3 == 11 or numericValue3 == 12 then
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(4, "Barbells", _G.TBarBellSelected)
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-                end
+                traintype = "Barbells"
+                weight = _G.TBarBellSelected
+                kgValue = weight
+                numericValue = tonumber(kgValue:match("%d+"))
+                level = numericValue <= 3 and "1" or numericValue <= 6 and "2" or numericValue <= 9 and "3" or "4"
+                toolService.onEquipRequest:FireServer(level, traintype, weight)
             end
+
+            toolService.onClick:FireServer()
+            punchBagService.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
         end
     end    
 })
