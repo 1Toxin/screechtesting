@@ -214,10 +214,6 @@ local ExploitEnable = Exploits:AddSection({
     Name = "Exploits - Enable"
 })
 
-local PetStrengthDupe = Exploits:AddSection({
-    Name = "Exploits - Dupe Pet Strength"
-})
-
 local EventEgg = Event:AddSection({
     Name = "Event - Event Auto Hatch"
 })
@@ -238,6 +234,18 @@ local MiscRedeem = Misc:AddSection({
     Name = "Misc - Auto Redeem"
 })
 
+local MiscVisualS = Misc:AddSection({
+    Name = "Misc - Visual Strength"
+})
+
+local MiscVisualPot = Misc:AddSection({
+    Name = "Misc - Visual Potion"
+})
+
+local MiscVisualP = Misc:AddSection({
+    Name = "Misc - Visual Pets"
+})
+
 local indexplaceholder = Index:AddSection({
     Name = "COMING SOON"
 })
@@ -250,7 +258,11 @@ local AutoDelete = Pets:AddSection({
     Name = "Pets - Auto Delete"
 })
 
-UpdateLog:AddParagraph("Update Log","✅ Fixed Auto Hatch\n✅ Auto Delete\n✅ Join the Discord")
+local AutoMutate = Pets:AddSection({
+    Name = "Pets - Auto Mutate"
+})
+
+UpdateLog:AddParagraph("Update Log","✅ Added Visuals\n✅ Added Auto Mutate\n✅ Added Auto Claim Season Rewards\n✅ Join the Discord")
 UpdateLog:AddParagraph("Credits","Script made by 1oxin & Ja5on")
 
 local eggeventamt = EventEgg:AddParagraph("Egg Amount", game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Event.Amount.Text)
@@ -825,80 +837,6 @@ MiscRedeem:AddToggle({
 	end    
 })
 
-PetStrengthDupe:AddTextbox({
-	Name = "Pet Name (Case Sensitive)",
-	Default = "",
-	TextDisappear = false,
-	Callback = function(name)
-		petName = name
-	end	  
-})
-PetStrengthDupe:AddDropdown({
-	Name = "Rarity",
-	Default = "None",
-	Options = {"None", "Gold", "Void"},
-	Callback = function(rare)
-		rarity = rare
-	end    
-})
-
-PetStrengthDupe:AddDropdown({
-	Name = "Pet Size",
-	Default = "None",
-	Options = {"None", "Big", "Huge"},
-	Callback = function(size)
-		petSize = size
-	end    
-})
-
-PetStrengthDupe:AddButton({
-	Name = "Start!",
-	Callback = function()
-      	bugCode()
-  	end    
-})
-
-function bugCode()
-    local petColor = {Gold = Color3.fromRGB(255, 215, 0), Void = Color3.fromRGB(150, 44, 255)}
-    local inputColor = petColor[rarity]
-
-    for _, pets in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetDescendants()) do
-        if pets:IsA("Frame") then
-            local args = {
-                [1] = pets.Name
-            }
-            
-            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("unequip"):InvokeServer(unpack(args))
-        end
-    end
-
-    for _, pets in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetDescendants()) do
-        if pets:IsA("TextLabel") then
-            local imageLabel = nil
-            if petSize ~= "None" then
-                imageLabel = pets.Parent:FindFirstChild(petSize)
-            end
-            if rarity ~= "None" and inputColor and string.find(pets.Text, petName) and pets.TextColor3 == inputColor and imageLabel and imageLabel.Visible == true then
-                for i = 1,32 do
-                    local args = {
-                        [1] = pets.Parent.Parent.Name
-                    }
-                    
-                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("equip"):InvokeServer(unpack(args)) 
-                end
-            elseif (rarity == "None" or petSize == "None") and string.find(pets.Text, petName) then
-                for i = 1,32 do
-                    local args = {
-                        [1] = pets.Parent.Parent.Name
-                    }
-                    
-                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("equip"):InvokeServer(unpack(args)) 
-                end
-            end
-        end
-    end
-end
-
 local World1Eggtable = {}
 local World2Eggtable = {}
 local World3Eggtable = {}
@@ -1033,6 +971,172 @@ function autoDel()
         end
     end
 end
+
+local function automutation()
+    local plr = game.Players.LocalPlayer
+    print("automutation() called")
+    while true do
+        if getgenv().automutate then
+            for i, v in pairs(game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetService.RF.getOwned:InvokeServer(plr)) do
+                local cureValue = v.Cure
+                if cureValue ~= "Ghost" then
+                    if _G.SelectedMutate == "Rainbow" and cureValue == "Rainbow" then
+                        game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetCombineService.RF.mutate:InvokeServer(i, {})
+                    elseif _G.SelectedMutate ~= "Rainbow" then
+                        game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetCombineService.RF.cure:InvokeServer(i)
+                        game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetCombineService.RF.mutate:InvokeServer(i, {})
+                    end
+                end
+            end
+        end
+        task.wait()
+    end
+end
+
+AutoMutate:AddToggle({
+    Name = "Auto Mutate",
+    Default = false,
+    Callback = function(Value)
+        getgenv().automutate = Value
+        print("automutate set to", Value)
+        if Value then
+            automutation()
+        end
+    end    
+})
+
+
+
+SeasonRedeem:AddButton({
+	Name = "Claim Free Rewards",
+	Callback = function()
+		for i = 1, 20 do
+			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(i, "Main")
+		end
+  	end    
+})
+
+
+SeasonRedeem:AddButton({
+	Name = "Claim Premium Rewards",
+	Callback = function()
+		for i = 1, 20 do
+			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(i, "Premium")
+		end
+  	end    
+})
+
+MiscVisualPot:AddTextbox({
+	Name = "Enter Potion Amount",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.pamount = Value
+	end	  
+})
+
+MiscVisualPot:AddButton({
+	Name = "Set Potion",
+	Callback = function()
+		local goldpot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Golden.Buttons.Claim.TextLabel
+		local luckpot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Luck.Buttons.Claim.TextLabel
+		local voidpot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Void.Buttons.Claim.TextLabel
+		local winspot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Wins.Buttons.Claim.TextLabel
+		
+		goldpot.Text = _G.pamount
+		winspot.Text = _G.pamount
+		voidpot.Text = _G.pamount
+		luckpot.Text = _G.pamount
+  	end    
+})
+
+MiscVisualS:AddTextbox({
+	Name = "Enter Strength Amount",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.amount = Value
+	end	  
+})
+
+MiscVisualS:AddButton({
+	Name = "Set Strength",
+	Callback = function()
+		local bicepamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Bicep.Amount
+		local knuckleamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Speed.Amount
+		local handamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Hand.Amount
+		
+		handamt.Text = _G.amount
+		knuckleamt.Text = _G.amount
+		bicepamt.Text = _G.amount
+  	end    
+})
+
+local Players = game:GetService("Players")
+local petInventory = Players.LocalPlayer.PlayerGui.GameUI.Menus.PetInventory
+local scrollingFrame = petInventory.Container.ScrollingFrame.Pets
+
+
+local function visualchangepets(imageid, petname)
+local frames = scrollingFrame:GetChildren()
+	for _, frame in ipairs(frames) do
+		if frame:IsA("Frame") then
+			local toggle = frame:FindFirstChild("Toggle")
+			if toggle then
+				local petIcon = toggle:FindFirstChild("PetIcon")
+				if petIcon then
+					local icon = petIcon:FindFirstChild("Icon")
+					if icon then
+						icon.Image = imageid
+						icon.Size = UDim2.new(2.15, 0, 2.15, 0)
+					end
+				end
+
+				local huge = toggle:FindFirstChild("Huge")
+				if huge then
+					huge.Visible = true
+				end
+
+				local big = toggle:FindFirstChild("Big")
+				if big then
+					big.Visible = false
+				end
+
+				local stat = toggle:FindFirstChild("Stat")
+				if stat then
+					stat.Text = petname
+					stat.TextColor3 = Color3.fromRGB(150, 44, 255)
+				end
+			end
+		end
+	end
+end
+
+MiscVisualP:AddTextbox({
+	Name = "Enter Pet Name",
+	Default = "Spark",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.visualpetname = Value
+	end	  
+})
+
+MiscVisualP:AddTextbox({
+	Name = "Enter Pet Image ID",
+	Default = "rbxassetid://13993512938",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.visualpeticon = Value
+	end	  
+})
+
+MiscVisualP:AddButton({
+	Name = "Set Pets",
+	Callback = function()
+		visualchangepets(_G.visualpeticon, _G.visualpetname)
+  	end    
+})
+
 
 while true do
     wait()
