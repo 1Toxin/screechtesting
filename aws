@@ -1,3 +1,5 @@
+getgenv().Config = {}
+
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local Window = OrionLib:MakeWindow({Name = "Screech - Arm Wrestle Simulator", HidePremium = false, SaveConfig = true, ConfigFolder = "ScreechHub", IntroText = "Screech Hub", IntroIcon = "rbxassetid://10851325055"})
@@ -150,7 +152,6 @@ local Pets = Window:MakeTab({
     Icon = "rbxassetid://13628400877",
     PremiumOnly = false
 })
-
 local Index = Window:MakeTab({
     Name = "Index",
     Icon = "rbxassetid://12757450277",
@@ -245,9 +246,12 @@ local AutoHatch = Pets:AddSection({
     Name = "Pets - Auto Hatch"
 })
 
+local AutoDelete = Pets:AddSection({
+    Name = "Pets - Auto Delete"
+})
 
-UpdateLog:AddParagraph("Update Log","✅ Script Released\n✅ Join the Discord\n✅ More being added VERY soon!")
-UpdateLog:AddParagraph("Credits","Script made by 1oxin")
+UpdateLog:AddParagraph("Update Log","✅ Fixed Auto Hatch\n✅ Auto Delete\n✅ Join the Discord")
+UpdateLog:AddParagraph("Credits","Script made by 1oxin & Ja5on")
 
 local eggeventamt = EventEgg:AddParagraph("Egg Amount", game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Event.Amount.Text)
 
@@ -895,6 +899,38 @@ function bugCode()
     end
 end
 
+local World1Eggtable = {}
+local World2Eggtable = {}
+local World3Eggtable = {}
+local World4Eggtable = {}
+
+for _, egg in pairs(workspace.Zones:GetDescendants()) do
+	if egg:IsA("MeshPart") and egg.Name ~= "Hitbox" and egg.Parent:IsA("Model") and egg.Parent.Parent.Name == "Eggs" and egg.Parent.Parent.Parent.Parent.Name == "1" then
+		local name = egg.Name:gsub("Egg", "")
+		table.insert(World1Eggtable, name)
+	elseif egg.Name == "Model" and egg.Parent:IsA("Model") and egg.Parent.Parent.Name == "Eggs" and egg.Parent.Parent.Parent.Parent.Name == "2" then
+		local name = egg.Parent.Name:gsub("Egg", "")
+		if name:find("^%s*$") then
+			name = egg.Parent.Name
+		end
+		table.insert(World2Eggtable, name)
+	elseif egg.Name == "Hitbox" and egg.Parent.Parent.Name == "Eggs" and egg.Parent.Parent.Parent.Parent.Name == "3" then
+		local split = string.split(egg.Parent.Name, " ")
+		if split[#split] == "Egg" then
+			split[#split] = nil
+		end
+		local name = table.concat(split, "")
+		table.insert(World3Eggtable, name)
+	elseif egg.Name == "Hitbox" and egg.Parent.Parent.Name == "Eggs" and egg.Parent.Parent.Parent.Parent.Name == "4" then
+		table.insert(World4Eggtable, egg.Parent.Name)
+	end
+end
+
+table.insert(World1Eggtable, 1, "None")
+table.insert(World2Eggtable, 1, "None")
+table.insert(World3Eggtable, 1, "None")
+table.insert(World4Eggtable, 1, "None")
+
 _G.SelectedEgg = "None"
 
 local selectedegglabel = AutoHatch:AddLabel("Selected Egg: ".._G.SelectedEgg)
@@ -939,16 +975,68 @@ AutoHatch:AddToggle({
 	Name = "Auto Hatch Selected Egg",
 	Default = false,
 	Callback = function(Value)
-	_G.ToggleHatch = Value
-		while _G.ToggleHatch do
+		_G.ToggleHatch = Value
+		while _G.ToggleHatch and _G.SelectedEgg ~= "None" do
 			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg)
 		end
 	end    
 })
 
 
+local petsToDelete = {}
+
+local petsToDeleteLabel = AutoDelete:AddLabel("Selected Pets: "..table.concat(petsToDelete, ", "))
+
+AutoDelete:AddTextbox({
+	Name = "Pets to Delete (Can Accept Multiple Pets)",
+	Default = "",
+	TextDisappear = true, 
+	Callback = function(name1)
+            local petNames = {}
+            for petName in (name1..", "):gmatch("(.-), ") do
+                table.insert(petsToDelete, petName)
+            end
+            petsToDeleteLabel.Text = "Selected Pets: "..name1
+	end	  
+})
+
+AutoDelete:AddButton({
+	Name = "Reset Pet Delete",
+	Callback = function()
+            petsToDelete = {}
+  	end    
+})
+
+AutoDelete:AddToggle({
+	Name = "Auto Delete",
+	Default = false,
+	Callback = function(v)
+            Config.autoDel = v
+            spawn(autoDel)
+	end    
+})
+
+
+function autoDel()
+    while task.wait() and Config.autoDel do
+        for _, pet in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetDescendants()) do
+            for _, petName in pairs(petsToDelete) do
+                if pet:IsA("TextLabel") and pet.Text == petName then
+                    local petid = pet.Parent.Parent.Name
+                    local args = {
+                        [1] = petid
+                    }
+
+                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("delete"):InvokeServer(unpack(args))
+                end
+            end
+        end
+    end
+end
+
 while true do
     wait()
 	selectedegglabel:Set("Selected Egg: ".._G.SelectedEgg)
+    petsToDeleteLabel:Set("Selected Pets: "..table.concat(petsToDelete, ", "))
     updateStats(Statistics)
 end
