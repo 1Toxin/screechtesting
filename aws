@@ -432,7 +432,7 @@ Knuckles:AddToggle({
 		_G.bagclick = Value
         while _G.bagclick do
             wait()
-            game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone, _G.SelectedBag, true)
+            game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone, _G.SelectedBag)
         end
 	end    
 })
@@ -580,19 +580,19 @@ ExploitEnable:AddToggle({
                 if numericValue2 < 251 then  
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("1", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue2 < 4001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("2", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue2 < 45001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("3", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue2 < 300001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("4", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 end
             elseif _G.traintype2 == "Barbells" then
                 local kgValue3 = _G.TBarBellSelected
@@ -600,19 +600,19 @@ ExploitEnable:AddToggle({
                 if numericValue3 == 1 or numericValue3 == 2 or numericValue3 == 3 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(1, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue3 == 4 or numericValue3 == 5 or numericValue3 == 6 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(2, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue3 == 7 or numericValue3 == 8 or numericValue3 == 9 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(3, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 elseif numericValue3 == 10 or numericValue3 == 11 or numericValue3 == 12 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(4, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
                 end
             end
         end
