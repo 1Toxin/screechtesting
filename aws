@@ -170,6 +170,12 @@ local Misc = Window:MakeTab({
     PremiumOnly = false
 })
 
+local Addon = Window:MakeTab({
+    Name = "Addons",
+    Icon = "rbxassetid://13812960185",
+    PremiumOnly = false
+})
+
 local UpdateLog = Home:AddSection({
     Name = "Home - Update Log"
 })
@@ -196,6 +202,10 @@ local NPCStats = NPC:AddSection({
 
 local NPCFarm = NPC:AddSection({
     Name = "NPC - Autofarm"
+})
+
+local NPCFarmStart = NPC:AddSection({
+    Name = "NPC - Start"
 })
 
 local Exploit = Exploits:AddSection({
@@ -230,6 +240,10 @@ local SeasonRedeem = Season:AddSection({
     Name = "Season - Auto Redeem"
 })
 
+local MiscTP = Misc:AddSection({
+    Name = "Misc - Teleport"
+})
+
 local MiscRedeem = Misc:AddSection({
     Name = "Misc - Auto Redeem"
 })
@@ -239,15 +253,19 @@ local MiscVisualS = Misc:AddSection({
 })
 
 local MiscVisualPot = Misc:AddSection({
-    Name = "Misc - Visual Potion"
+    Name = "Misc - Visual Potions"
 })
 
 local MiscVisualP = Misc:AddSection({
     Name = "Misc - Visual Pets"
 })
 
-local indexplaceholder = Index:AddSection({
-    Name = "COMING SOON"
+local Index = Index:AddSection({
+    Name = "Index - Auto Index"
+})
+
+local AutoSelectPet = Pets:AddSection({
+    Name = "Pets - Select Pet"
 })
 
 local AutoHatch = Pets:AddSection({
@@ -262,12 +280,17 @@ local AutoMutate = Pets:AddSection({
     Name = "Pets - Auto Mutate"
 })
 
+local EquipBest = Pets:AddSection({
+    Name = "Pets - Auto Equip Best"
+})
+
 local MiscFree = Misc:AddSection({
     Name = "Misc - Free Gamepasses"
 })
 
-UpdateLog:AddParagraph("Update Log","✅ Made Visuals better\n✅ Fixed VIP bag (I thinking)\n✅ Join the Discord")
+UpdateLog:AddParagraph("Update Log","✅ Added Auto Index\n✅ Fixed VIP bag\n✅ Added Teleports\n✅ Added Auto Delete Bad Event Pets\n✅ Added 3/8x Hatch\n✅ Added Addons\n✅ Fixed & Readded Claim Season Rewards\n✅ Added Auto Equip Best\n✅ Join the Discord")
 UpdateLog:AddParagraph("Credits","Script made by 1oxin & Ja5on")
+
 
 local eggeventamt = EventEgg:AddParagraph("Egg Amount", game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Event.Amount.Text)
 
@@ -519,7 +542,7 @@ NPCFarm:AddSlider({
 	end    
 })
 
-NPCFarm:AddToggle({
+NPCFarmStart:AddToggle({
 	Name = "Autofarm NPC",
 	Default = false,
 	Callback = function(Value)
@@ -527,11 +550,12 @@ NPCFarm:AddToggle({
         while _G.AFNPC == true do
             wait()
 		    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ArmWrestleService.RE.onEnterNPCTable:FireServer(_G.NPCSelected, workspace.Zones[_G.NPCSelectedZone].Interactables.ArmWrestling.NPC[_G.NPCSelected], _G.NPCSelectedZone)
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ArmWrestleService.RE.onLeaveTable:FireServer()
         end
 	end    
 })
 
-NPCFarm:AddToggle({
+NPCFarmStart:AddToggle({
 	Name = "NPC Autoclick",
 	Default = false,
 	Callback = function(Value)
@@ -604,19 +628,35 @@ ExploitEnable:AddToggle({
                 if numericValue2 < 251 then  
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("1", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue2 < 4001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("2", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue2 < 45001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("3", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue2 < 300001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("4", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 end
             elseif _G.traintype2 == "Barbells" then
                 local kgValue3 = _G.TBarBellSelected
@@ -624,33 +664,40 @@ ExploitEnable:AddToggle({
                 if numericValue3 == 1 or numericValue3 == 2 or numericValue3 == 3 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(1, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue3 == 4 or numericValue3 == 5 or numericValue3 == 6 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(2, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue3 == 7 or numericValue3 == 8 or numericValue3 == 9 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(3, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 elseif numericValue3 == 10 or numericValue3 == 11 or numericValue3 == 12 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(4, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    vipbagmulti()
+					if _G.SelectedBag2 == "VIP" then
+					game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+						elseif _G.SelectedBag2 ~= "VIP" then
+						game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+					end
                 end
             end
         end
     end    
 })
-
-local function vipbagmulti()
-	if _G.SelectedBag2 == "VIP" then
-	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
-	elseif _G.SelectedBag2 ~= "VIP" then
-		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
-	end
-end
-
 EventEgg:AddToggle({
 	Name = "Auto Hatch",
 	Default = false,
@@ -835,6 +882,68 @@ MiscRedeem:AddToggle({
 	end    
 })
 
+function freePassClaim()
+for i, v in pairs(getgc(true)) do
+    if type(v) == "table" and rawget(v, "Remote") then
+        if type(v["Remote"]) == "table" or type(v["Remote"]) == "userdata" then
+            v["Remote"].Name = v["Name"]
+        end
+    end
+end
+
+for i = 1,20 do
+local args = {
+    [1] = i,
+    [2] = "Main"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Communication"):WaitForChild("Functions"):WaitForChild("ClaimSeasonReward"):InvokeServer(unpack(args))
+task.wait(0.5)
+end
+end
+
+function PremiumPassClaim()
+for i, v in pairs(getgc(true)) do
+    if type(v) == "table" and rawget(v, "Remote") then
+        if type(v["Remote"]) == "table" or type(v["Remote"]) == "userdata" then
+            v["Remote"].Name = v["Name"]
+        end
+    end
+end
+
+for i = 1,20 do
+local args = {
+    [1] = i,
+    [2] = "Premium"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Communication"):WaitForChild("Functions"):WaitForChild("ClaimSeasonReward"):InvokeServer(unpack(args))
+task.wait(0.5)
+end
+end
+
+SeasonRedeem:AddToggle({
+	Name = "Claim Free Rewards",
+	Default = false,
+	Callback = function(Value)
+	_G.automain = Value
+		while _G.automain do
+			freePassClaim()
+		end
+	end    
+})
+
+SeasonRedeem:AddToggle({
+	Name = "Claim Premium Rewards",
+	Default = false,
+	Callback = function(Value)
+	_G.autoprem = Value
+		while _G.autoprem do
+			PremiumPassClaim()
+		end
+	end    
+})
+
 MiscRedeem:AddToggle({
 	Name = "Auto Redeem Gifts",
 	Default = false,
@@ -887,9 +996,9 @@ table.insert(World4Eggtable, 1, "None")
 
 _G.SelectedEgg = "None"
 
-local selectedegglabel = AutoHatch:AddLabel("Selected Egg: ".._G.SelectedEgg)
+local selectedegglabel = AutoSelectPet:AddLabel("Selected Egg: ".._G.SelectedEgg)
 
-AutoHatch:AddDropdown({
+AutoSelectPet:AddDropdown({
 	Name = "World 1 Eggs",
 	Default = World1Eggtable[1],
 	Options = World1Eggtable,
@@ -898,7 +1007,7 @@ AutoHatch:AddDropdown({
 	end    
 })
 
-AutoHatch:AddDropdown({
+AutoSelectPet:AddDropdown({
 	Name = "World 2 Eggs",
 	Default = World2Eggtable[1],
 	Options = World2Eggtable,
@@ -907,7 +1016,7 @@ AutoHatch:AddDropdown({
 	end    
 })
 
-AutoHatch:AddDropdown({
+AutoSelectPet:AddDropdown({
 	Name = "World 3 Eggs",
 	Default = World3Eggtable[1],
 	Options = World3Eggtable,
@@ -916,7 +1025,7 @@ AutoHatch:AddDropdown({
 	end    
 })
 
-AutoHatch:AddDropdown({
+AutoSelectPet:AddDropdown({
 	Name = "World 4 Eggs",
 	Default = World4Eggtable[1],
 	Options = World4Eggtable,
@@ -926,15 +1035,40 @@ AutoHatch:AddDropdown({
 })
 
 AutoHatch:AddToggle({
-	Name = "Auto Hatch Selected Egg",
-	Default = false,
-	Callback = function(Value)
-		_G.ToggleHatch = Value
-		while _G.ToggleHatch and _G.SelectedEgg ~= "None" do
-			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg)
-		end
-	end    
+    Name = "Auto Hatch",
+    Default = false,
+    Callback = function(Value)
+        _G.ToggleHatch = Value
+        while _G.ToggleHatch do
+            game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg, {}, false)
+        end
+    end    
 })
+
+AutoHatch:AddToggle({
+    Name = "Auto Hatch 3x",
+    Default = false,
+    Callback = function(Value)
+        _G.ToggleHatch3 = Value
+        while _G.ToggleHatch3 do
+		    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg, {}, true, false)
+        end
+    end    
+})
+
+AutoHatch:AddToggle({
+    Name = "Auto Hatch 8x",
+    Default = false,
+    Callback = function(Value)
+        _G.ToggleHatch8 = Value
+        while _G.ToggleHatch8 do
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.EggService.RF.purchaseEgg:InvokeServer(_G.SelectedEgg, {}, false, true)
+        end
+    end    
+})
+
+
+
 
 
 local petsToDelete = {}
@@ -1021,35 +1155,9 @@ AutoMutate:AddToggle({
     end    
 })
 
-
-
-SeasonRedeem:AddButton({
-	Name = "Claim Free Rewards",
-	Callback = function()
-	    for freerewardlist = 1,20 do
-            local argsmain = {
-                [1] = freerewardlist
-            }
-			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(unpack(argsmain), "Main")
-		end
-  	end    
-})
-
-SeasonRedeem:AddButton({
-	Name = "Claim Premium Rewards",
-	Callback = function()
-	    for premrewardlist = 1,20 do
-            local argsprem = {
-                [1] = premrewardlist
-            }
-			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(unpack(argsprem), "Premium")
-		end
-  	end    
-})
-
 MiscVisualPot:AddTextbox({
 	Name = "Enter Potion Amount",
-	Default = "",
+	Default = "Enter",
 	TextDisappear = true,
 	Callback = function(Value)
 		_G.pamount = Value
@@ -1171,6 +1279,266 @@ MiscFree:AddButton({
   	end    
 })
 
+local dontDeletePets = {}
+
+Index:AddParagraph("Notice", "Toggling Auto Delete Will Auto Save Your Current Inventory To Prevent Deleting Current Pets")
+
+Index:AddButton({
+    Name = "|| SET INVENTORY ||",
+    Callback = function()
+        setInv()
+    end
+})
+
+Index:AddParagraph("Warning", "But Press Set Inventory Just Incase")
+
+local worlds = {
+    World1 = {"Earth", "Icy", "Lava", "Blackhole"},
+    World2 = {"Crystal", "Molten", "Solar", "Moon", "Ice", "Burning"},
+    World3 = {"Coconut", "Palm", "Treasure", "Clam", "KingFish", "Poseidon"},
+    World4 = {"Rust", "Widget", "Atom", "Iridescent", "Mutant", "Nuclear"}
+}
+
+Index:AddDropdown({
+    Name = "Exclude World",
+    Default = "None",
+    Options = {"None", "World1", "World2", "World3", "World4"},
+    Callback = function(Value)
+        if Value == "None" then
+            getgenv().Config.ExcludedWorld = nil
+        else
+            getgenv().Config.ExcludedWorld = Value
+        end
+    end    
+})
+
+Index:AddToggle({
+    Name = "|| START AUTO INDEX! ||",
+    Default = false,
+    Callback = function(v)
+        Config.autoIndex = v
+        spawn(autoIndex)
+    end    
+})
+
+Index:AddLabel("Toggle Auto Delete After Starting Auto Index")
+
+Index:AddToggle({
+    Name = "|| AUTO DELETE On Open ||",
+    Default = false,
+    Callback = function(v)
+        Config.petDelete = v
+        spawn(petDelete)
+    end    
+})
+
+function autoIndex()
+    local petsFromEggs = {
+        ['Earth'] = {"Mouse", "Dog", "Cat", "Cow"},
+        ['Icy'] = {"Fox", "Bear", "Deer", "Squirrel", "Slime"},
+        ['Lava'] = {"Monkey", "Parrot", "Elephant", "Tiger"},
+        ['Blackhole'] = {"GrassMage", "MagicMage", "WaterMage", "Spooky"},
+        ['Crystal'] = {"Shark", "Penguin", "ArcticFox", "Wolf", "Orca"},
+        ['Molten'] = {"Astra", "Unicorn", "Axeli", "Quasar"},
+        ['Solar'] = {"SunRabbit", "SunBull", "SolarDog", "SunDeer"},
+        ['Moon'] = {"MoonBat", "MoonOwl", "MoonSpider"},
+        ['Ice'] = {"Rogue", "Scaler", "Drifter"},
+        ['Burning'] = {"Tetra", "Dermite", "Magnus", "Vangaurd"},
+        ['Coconut'] = {"Pinky", "Brutus", "Sour", "Poison", "Crimson"},
+        ['Palm'] = {"CoCo", "Calypso", "Fang", "Barkley", "Raffia"},
+        ['Treasure'] = {"Cutlass", "Kelp", "Coin", "Ruby"},
+        ['Clam'] = {"Ascent", "Venti", "Tide", "Pearl"},
+        ['KingFish'] = {"Hooky", "QueenTrident", "KingTrident"},
+        ['Poseidon'] = {"Phoenix", "Thunder", "Bolt"},
+        ['Rust'] = {"CowRaider", "Rex", "Welder", "Spike", "Rustie"},
+        ['Widget'] = {"AT-10", "C-7", "BEEF-10", "E-1", "RAID-99"},
+        ['Atom'] = {"Proto", "Neutrino", "Evangilo", "Alpha", "Alto"},
+        ['Iridescent'] = {"Shirma", "Dimentro", "Veltro", "Expa"},
+        ['Mutant'] = {"Ravage", "Sneak", "Squeek", "Grime"},
+        ['Nuclear'] = {"Blaze", "LumoCat", "Spark", "LumoSheep", "LumoBoxer", "LumoDog"}
+    }
+
+    local notPet = {}
+
+    local function updateNotPet()
+        notPet = {}
+        for _, lockedPet in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetIndex.Container.ScrollingFrame.Pets:GetDescendants()) do
+            if lockedPet.Name == "PetIcon" and lockedPet:IsA("ImageLabel") and lockedPet.ImageColor3 == Color3.new(0, 0, 0) then
+                local petLocked = lockedPet.Parent.Parent.Name
+                table.insert(notPet, petLocked)
+            end
+        end
+    end
+
+    while wait() and Config.autoIndex do
+        updateNotPet()
+
+        while #notPet > 0 and wait() and Config.autoIndex do
+            for egg, _ in pairs(petsFromEggs) do
+                local exclude = false
+                if getgenv().Config.ExcludedWorld then
+                    for _, zone in ipairs(worlds[getgenv().Config.ExcludedWorld]) do
+                        if egg == zone then
+                            exclude = true
+                            break
+                        end
+                    end
+                end
+                
+                if not exclude then
+                    local args = {
+                        [1] = egg,
+                        [2] = {},
+                        [4] = false
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("EggService"):WaitForChild("RF"):WaitForChild("purchaseEgg"):InvokeServer(unpack(args))
+                end                
+
+                if not Config.autoIndex then
+                    break
+                end
+            end
+            updateNotPet()
+            if not Config.autoIndex then
+                break
+            end
+        end
+    end
+end
+
+function setInv()
+    if next(dontDeletePets) ~= nil then
+        dontDeletePets = {}
+    end
+
+    for _, kpets in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetChildren()) do
+        if kpets:IsA("Frame") then
+            dontDeletePets[kpets.Name] = true
+        end
+    end
+end
+
+function petDelete()
+    if next(dontDeletePets) == nil then
+        setInv()
+    end
+
+    while task.wait() and Config.petDelete and Config.autoIndex do
+        for _, pet in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetDescendants()) do
+            if pet.Name == "Stat" and pet:IsA("TextLabel") and dontDeletePets[pet.Parent.Parent.Name] == nil then
+                local args = {
+                    [1] = pet.Parent.Parent.Name
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("delete"):InvokeServer(unpack(args))
+            end
+        end
+    end
+end
+
+local player = game.Players.LocalPlayer
+local petInventory = player.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets
+
+
+local function deleteEventPet2(pet)
+    local toggleButton = pet:FindFirstChild("Toggle")
+    if toggleButton then
+        local statLabel = toggleButton:FindFirstChild("Stat")
+        if statLabel then
+            local statText = statLabel.Text
+            if statText == "Summer Cat" or statText == "Leviathan" or statText == "King Octopus" then
+                local parentName = statLabel.Parent.Parent.Name
+                return parentName
+            end
+        end
+    end
+end
+
+
+local function deleteEventPet1()
+    local pets = petInventory:GetChildren()
+
+    for _, pet in ipairs(pets) do
+        local parentName = deleteEventPet2(pet)
+        if parentName then
+            local deleteRemote = game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetService.RF.delete
+            deleteRemote:InvokeServer(parentName)
+        end
+    end
+end
+
+EventEgg:AddToggle({
+	Name = "Delete Bad Pets",
+	Default = false,
+	Callback = function(Value)
+	_G.EventDelete = Value
+		while _G.EventDelete do
+            wait()
+			deleteEventPet1()
+        end
+	end    
+})
+
+-- Addon
+
+Addon:AddParagraph("Instructions", "1. Locate Your Executors Workspace Folder\n2. Open The ScreechHub Folder and Open Addons (If You dont see it, re-execute script\n3. Create a .lua or .txt with the Addon name\n4. Put the Addon Code inside the file and re-execute\nTip. To Find Workspace Folder go to Appdata/local/packages/, then find a folder like this\n ROBLOXCORPORATION.ROBLOX_XXXXXXXXX/AC/Workspace)")
+
+if makefolder and writefile and readfile and listfiles then
+    makefolder("ScreechHub")
+    makefolder("ScreechHub\\Addon")
+
+    local addonFiles = listfiles("ScreechHub\\Addon")
+    for _, file in ipairs(addonFiles) do
+        local script = readfile(file)
+        local fileName = file:gsub("ScreechHub\\Addon\\", "")
+        fileName = fileName:gsub(".txt", ""):gsub(".lua", "")
+        Addon:AddButton({
+            Name = fileName,
+            Callback = function()
+                loadstring(script)()
+            end    
+        })
+    end
+end
+
+local function worldtp(tpworld)
+    if tpworld == "2" then
+        game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ZoneService"):WaitForChild("RE"):WaitForChild("teleport"):FireServer(workspace:WaitForChild("Zones"):WaitForChild("2"):WaitForChild("Interactables"):WaitForChild("Teleports"):WaitForChild("Locations"):WaitForChild("Futuristic"))
+        elseif tpworld == "1" then
+            game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ZoneService"):WaitForChild("RE"):WaitForChild("teleport"):FireServer(workspace:WaitForChild("Zones"):WaitForChild("1"):WaitForChild("Interactables"):WaitForChild("Teleports"):WaitForChild("Locations"):WaitForChild("BackToSchool"))
+            elseif tpworld == "3" then
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ZoneService"):WaitForChild("RE"):WaitForChild("teleport"):FireServer(workspace:WaitForChild("Zones"):WaitForChild("3"):WaitForChild("Interactables"):WaitForChild("Teleports"):WaitForChild("Locations"):WaitForChild("Beach"))
+                elseif tpworld == "4" then
+                    game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ZoneService"):WaitForChild("RE"):WaitForChild("teleport"):FireServer(workspace:WaitForChild("Zones"):WaitForChild("4"):WaitForChild("Interactables"):WaitForChild("Teleports"):WaitForChild("Locations"):WaitForChild("NuclearBunker"))
+    end
+end
+
+MiscTP:AddDropdown({
+	Name = "Select World",
+	Default = "1",
+	Options = {"1", "2", "3", "4"},
+	Callback = function(Value)
+		_G.worldnum = Value
+	end    
+})
+
+MiscTP:AddButton({
+	Name = "Teleport",
+	Callback = function()
+		worldtp(_G.worldnum)
+  	end    
+})
+
+EquipBest:AddToggle({
+	Name = "Auto Equip Best",
+	Default = false,
+	Callback = function(Value)
+	_G.EquipBest = Value
+		while _G.EquipBest do
+			game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("equipBest"):InvokeServer(game:GetService("Players").LocalPlayer)
+        end
+	end    
+})
 
 while true do
     wait()
