@@ -262,7 +262,11 @@ local AutoMutate = Pets:AddSection({
     Name = "Pets - Auto Mutate"
 })
 
-UpdateLog:AddParagraph("Update Log","✅ Added Visuals\n✅ Added Auto Mutate\n✅ Added Auto Claim Season Rewards\n✅ Join the Discord")
+local MiscFree = Misc:AddSection({
+    Name = "Misc - Free Gamepasses"
+})
+
+UpdateLog:AddParagraph("Update Log","✅ Made Visuals better\n✅ Fixed VIP bag (I thinking)\n✅ Join the Discord")
 UpdateLog:AddParagraph("Credits","Script made by 1oxin & Ja5on")
 
 local eggeventamt = EventEgg:AddParagraph("Egg Amount", game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Event.Amount.Text)
@@ -448,7 +452,11 @@ Knuckles:AddToggle({
 		_G.bagclick = Value
         while _G.bagclick do
             wait()
-            game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone, _G.SelectedBag)
+			if _G.SelectedBag == "VIP" then
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone, _G.SelectedBag, true)
+				elseif _G.SelectedBag ~= "VIP" then
+				game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone, _G.SelectedBag)
+			end
         end
 	end    
 })
@@ -596,19 +604,19 @@ ExploitEnable:AddToggle({
                 if numericValue2 < 251 then  
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("1", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue2 < 4001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("2", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue2 < 45001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("3", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue2 < 300001 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onGuiEquipRequest:FireServer("4", _G.traintype2, _G.KGSelected1)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 end
             elseif _G.traintype2 == "Barbells" then
                 local kgValue3 = _G.TBarBellSelected
@@ -616,24 +624,32 @@ ExploitEnable:AddToggle({
                 if numericValue3 == 1 or numericValue3 == 2 or numericValue3 == 3 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(1, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue3 == 4 or numericValue3 == 5 or numericValue3 == 6 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(2, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue3 == 7 or numericValue3 == 8 or numericValue3 == 9 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(3, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 elseif numericValue3 == 10 or numericValue3 == 11 or numericValue3 == 12 then
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onEquipRequest:FireServer(4, "Barbells", _G.TBarBellSelected)
                     game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.ToolService.RE.onClick:FireServer()
-                    game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+                    vipbagmulti()
                 end
             end
         end
     end    
 })
+
+local function vipbagmulti()
+	if _G.SelectedBag2 == "VIP" then
+	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2, true)
+	elseif _G.SelectedBag2 ~= "VIP" then
+		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PunchBagService.RE.onGiveStats:FireServer(_G.SelectedZone2, _G.SelectedBag2)
+	end
+end
 
 EventEgg:AddToggle({
 	Name = "Auto Hatch",
@@ -1010,18 +1026,23 @@ AutoMutate:AddToggle({
 SeasonRedeem:AddButton({
 	Name = "Claim Free Rewards",
 	Callback = function()
-		for i = 1, 20 do
-			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(i, "Main")
+	    for freerewardlist = 1,20 do
+            local argsmain = {
+                [1] = freerewardlist
+            }
+			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(unpack(argsmain), "Main")
 		end
   	end    
 })
 
-
 SeasonRedeem:AddButton({
 	Name = "Claim Premium Rewards",
 	Callback = function()
-		for i = 1, 20 do
-			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(i, "Premium")
+	    for premrewardlist = 1,20 do
+            local argsprem = {
+                [1] = premrewardlist
+            }
+			game:GetService("ReplicatedStorage").Communication.Functions['']:InvokeServer(unpack(argsprem), "Premium")
 		end
   	end    
 })
@@ -1043,10 +1064,10 @@ MiscVisualPot:AddButton({
 		local voidpot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Void.Buttons.Claim.TextLabel
 		local winspot = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.Store.Content.Potions.Content.Left.Wins.Buttons.Claim.TextLabel
 		
-		goldpot.Text = _G.pamount
-		winspot.Text = _G.pamount
-		voidpot.Text = _G.pamount
-		luckpot.Text = _G.pamount
+		goldpot.Text = "USE (".._G.pamount..")"
+		winspot.Text = "USE (".._G.pamount..")"
+		voidpot.Text = "USE (".._G.pamount..")"
+		luckpot.Text = "USE (".._G.pamount..")"
   	end    
 })
 
@@ -1062,13 +1083,12 @@ MiscVisualS:AddTextbox({
 MiscVisualS:AddButton({
 	Name = "Set Strength",
 	Callback = function()
-		local bicepamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Bicep.Amount
-		local knuckleamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Speed.Amount
-		local handamt = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Currency.Hand.Amount
-		
-		handamt.Text = _G.amount
-		knuckleamt.Text = _G.amount
-		bicepamt.Text = _G.amount
+    	local Players = game:GetService("Players")
+		local Player = Players.LocalPlayer
+        
+        Player:SetAttribute("HandStrength", _G.amount)
+        Player:SetAttribute("BicepPower", _G.amount)
+        Player:SetAttribute("KnuckleStrength", _G.amount)
   	end    
 })
 
@@ -1134,6 +1154,20 @@ MiscVisualP:AddButton({
 	Name = "Set Pets",
 	Callback = function()
 		visualchangepets(_G.visualpeticon, _G.visualpetname)
+  	end    
+})
+
+MiscFree:AddParagraph("Free Gamepass Info","Gives 3x & 8x open but it only works on event eggs\nalso gives AutoRebirth")
+
+MiscFree:AddButton({
+	Name = "Get Free Gamepasses",
+	Callback = function()
+		local Players = game:GetService("Players")
+		local Player = Players.LocalPlayer
+
+			Player:SetAttribute("TripleEggs", true)
+			Player:SetAttribute("OctoEggs", true)
+			Player:SetAttribute("AutoRebirth", true)
   	end    
 })
 
