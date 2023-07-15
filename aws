@@ -1455,14 +1455,20 @@ local function deleteEventPet2(pet)
 end
 
 
-local function deleteEventPet1()
-    local pets = petInventory:GetChildren()
-
-    for _, pet in ipairs(pets) do
-        local parentName = deleteEventPet2(pet)
-        if parentName then
-            local deleteRemote = game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.PetService.RF.delete
-            deleteRemote:InvokeServer(parentName)
+function deletebadPets()
+    local badPets = {"Holo Cat", "Holo Jellyfish", "Holo Croc"}
+    
+    for _, pets in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Menus.PetInventory.Container.ScrollingFrame.Pets:GetDescendants()) do
+        if pets.Name == "Stat" and pets:IsA("TextLabel") then
+            for _, badPet in pairs(badPets) do
+                if pets.Text == badPet then
+                    local args = {
+                    [1] = pets.Parent.Parent.Name
+                }
+                
+                game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("PetService"):WaitForChild("RF"):WaitForChild("delete"):InvokeServer(unpack(args))
+                end
+            end
         end
     end
 end
@@ -1474,7 +1480,7 @@ EventEgg:AddToggle({
 	_G.EventDelete = Value
 		while _G.EventDelete do
             wait()
-			deleteEventPet1()
+			spawn(deletebadPets)
         end
 	end    
 })
